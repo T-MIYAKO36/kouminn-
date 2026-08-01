@@ -1,10 +1,10 @@
 (function(){
   const Q=window.HIROPON_Q, SAVE='hiropon_ch4_v1';
-  const cats={election:['選挙','投票箱','選挙・政党・政治参加'],diet:['国会','国','法律・予算・二院制'],cabinet:['内閣','政','行政・議院内閣制'],court:['裁判所','司','裁判・司法権の独立'],local:['地方自治','町','首長・議会・直接請求']};
+  const cats={election:['選挙','選挙・政党・政治参加'],diet:['国会','法律・予算・二院制'],cabinet:['内閣','行政・議院内閣制'],court:['裁判所','裁判・司法権の独立'],local:['地方自治','首長・議会・直接請求']};
   const shardNames={election:'選挙',diet:'国会',cabinet:'内閣',court:'裁判所',local:'地方自治'};
   const story=[
-    ['勉三','国民から届いた要望書を、全部同じ場所へ送っちゃった……！'],
-    ['ヒロポン','大変じゃ！ 選挙・国会・内閣・裁判所・地方自治を結ぶ「民意のルート」が止まっておる。'],
+    ['勉三','初めての国会だ！ ……あれ？ しまった！ 国民から届いた要望書を、全部「内閣」へ送っちゃった！'],
+    ['ヒロポン','大変じゃ！ 選挙・国会・内閣・裁判所・地方自治を結ぶ「民意のルート」が消えてしもうた。'],
     ['勉三','僕が政治の仕組みを学び直して、必ず国民の声を届けます！'],
     ['ヒロポン','まず5つの民意のかけらを集め、数字コードと手続きの流れを復旧するのじゃ！']
   ];
@@ -47,20 +47,22 @@
   function startNew(){playOpeningFanfare();pulse('adventure-start');state=fresh();session=null;storyAt=0;save();showStory();}
   function showStory(){screen('storyScreen');const [who,text]=story[storyAt];$('.speaker').textContent=who==='勉三'?'北中 勉三':'ヒロポン';$('#storyText').textContent=text;save();}
   function renderMap(){stopBossMusic();screen('mapScreen');$('#locationLabel').textContent='政治の都・民意回廊';const allBasic=['election','diet','cabinet','court','local'].every(x=>state.cleared.includes(x));let cards=[];
-    Object.entries(cats).forEach(([id,v])=>cards.push(`<button class="stage-card ${state.cleared.includes(id)?'cleared':''}" data-stage="${id}"><span class="stage-icon">${v[1]}</span><h3>${v[0]}の門</h3><p>${v[2]}<br>基本問題 2問</p>${state.cleared.includes(id)?'<b class="clear-mark">◆</b>':''}</button>`));
-    cards.push(stageCard('numbers','数字コード','数','人数・年数・日数・割合｜6問',allBasic));
-    cards.push(stageCard('sequences','手続き回廊','順','流れを並べ替える｜3題',state.cleared.includes('numbers')));
-    cards.push(stageCard('boss','ボス：民意なき政治','王','数字＋機関＋判断｜4問',state.cleared.includes('sequences')));
+    Object.entries(cats).forEach(([id,v])=>cards.push(`<button class="stage-card ${state.cleared.includes(id)?'cleared':''}" data-stage="${id}"><img class="stage-emblem" src="assets/shard-${id}.svg" alt=""><h3>${v[0]}の門</h3><p>${v[1]}<br>基本問題 2問</p>${state.cleared.includes(id)?'<b class="clear-mark">獲得済み</b>':''}</button>`));
+    cards.push(stageCard('numbers','数字コード','assets/gate-number-v2.webp','人数・年数・日数・割合｜6問',allBasic));
+    cards.push(stageCard('sequences','手続き回廊','assets/gate-procedure-v2.webp','流れを並べ替える｜3題',state.cleared.includes('numbers')));
+    cards.push(stageCard('boss','民意の王門','assets/gate-peoples-will-v2.webp','数字＋機関＋判断｜4問',state.cleared.includes('sequences')));
     $('#stageGrid').innerHTML=cards.join('');
     $('#stageBoardWrap').classList.toggle('advanced',allBasic);
     $('#stageBoardWrap').dataset.route=!state.cleared.includes('numbers')?'numbers':!state.cleared.includes('sequences')?'sequences':'boss';
     $('#stageGrid').classList.toggle('board-mode',!allBasic);
+    if(!allBasic){const next=['election','diet','cabinet','court','local'].find(id=>!state.cleared.includes(id))||'local';$('#stageGrid').insertAdjacentHTML('beforeend',`<img class="board-duo-token token-at-${next}" src="assets/duo-token-official-v2.webp" alt="勉三とヒロポンのコマ">`);}
     $('#stageGrid').style.gridTemplateColumns=allBasic?'repeat(3,1fr)':'none';
     $('#mapHint').textContent=state.finished?'クリア済み。苦手復習または再挑戦ができます。':allBasic?'5つのかけらがそろった！ 数字コードを解読しよう。':'5つの分野を攻略し、民意のかけらを集めよう。';
     $('#reviewBtn').classList.toggle('hidden',!state.finished&&!state.wrongIds.length);
+    $('#footerShards').innerHTML=['election','diet','cabinet','court','local'].map(id=>`<img class="${state.cleared.includes(id)?'found':''}" src="assets/shard-${id}.svg" alt="${shardNames[id]}のかけら">`).join('');
     $$('.stage-card[data-stage]').forEach(b=>b.onclick=()=>{if(!b.classList.contains('locked'))beginStage(b.dataset.stage)});
   }
-  function stageCard(id,title,icon,desc,open){const done=state.cleared.includes(id);return `<button class="stage-card ${done?'cleared':''} ${open||done?'':'locked'}" data-stage="${id}"><span class="stage-icon">${icon}</span><h3>${title}</h3><p>${desc}</p>${done?'<b class="clear-mark">◆</b>':''}</button>`;}
+  function stageCard(id,title,image,desc,open){const done=state.cleared.includes(id);return `<button class="stage-card gate-card ${done?'cleared':''} ${open||done?'':'locked'}" data-stage="${id}"><img class="gate-art" src="${image}" alt=""><span class="gate-lock" aria-hidden="true"></span><h3>${title}</h3><p>${desc}</p>${done?'<b class="clear-mark">攻略済み</b>':''}</button>`;}
   function beginStage(id){let qs,type='choice',title='';
     if(cats[id]){qs=shuffle(Q.basic[id]).slice(0,2);title=cats[id][0];}
     else if(id==='numbers'){qs=shuffle(Q.numbers).slice(0,6);title='数字コード';}
@@ -83,7 +85,7 @@
   }
   function nextQuestion(){session.index++;session.attempts=0;session.answered=false;save();if(session.index<session.qs.length)showQuestion();else completeStage();}
   function completeStage(){const completedId=session.id;if(completedId==='review'){session=null;save();reviewCompleteModal();return;}if(!state.cleared.includes(completedId))state.cleared.push(completedId);session=null;save();if(completedId==='boss'){state.finished=true;state.best=Math.max(state.best||0,state.total?state.firstCorrect/state.total:0);save();showResult();}else{rewardModal(completedId);}}
-  function rewardModal(completedId){const basic=cats[completedId],allBasic=['election','diet','cabinet','court','local'].every(x=>state.cleared.includes(x));if(basic&&allBasic)playRouteJingle();else sfx(basic?'shard':'unlock');pulse(basic?'shard-burst':'route-restored');const reward=basic?`<div class="reward-item"><img src="assets/shard-${completedId}.svg" alt="${basic[0]}の民意のかけら"><span>${basic[0]}の紋章</span></div>`:completedId==='numbers'?'<div class="reward-item reward-glyph"><span>数</span><b>数字コード</b></div>':'<div class="reward-item reward-glyph procedure"><span>順</span><b>手続きの鍵</b></div>';$('#modalBody').innerHTML=`<p class="eyebrow">MISSION COMPLETE</p>${reward}<h2>${basic?'「'+basic[0]+'」の民意のかけらを獲得！':completedId==='numbers'?'数字コードを解読！':'手続きの流れを復旧！'}</h2><p>正解が、止まっていた民意のルートを動かしました。</p><button class="btn primary compact" data-action="map">マップへ</button>`;$('#modal').classList.remove('hidden');$('#modalBody [data-action="map"]').onclick=()=>{$('#modal').classList.add('hidden');renderMap()};}
+  function rewardModal(completedId){const basic=cats[completedId],allBasic=['election','diet','cabinet','court','local'].every(x=>state.cleared.includes(x));if(basic&&allBasic)playRouteJingle();else sfx(basic?'shard':'unlock');pulse(basic?'shard-burst':'route-restored');const reward=basic?`<div class="reward-item"><img src="assets/shard-${completedId}.svg" alt="${basic[0]}の民意のかけら"><span>${basic[0]}の紋章</span></div>`:completedId==='numbers'?'<div class="reward-item gate-reward"><img src="assets/gate-number-v2.webp" alt="数字の扉"><b>数字コード</b></div>':'<div class="reward-item gate-reward"><img src="assets/gate-procedure-v2.webp" alt="手続きの扉"><b>手続きの鍵</b></div>';$('#modalBody').innerHTML=`<p class="eyebrow">MISSION COMPLETE</p>${reward}<h2>${basic?'「'+basic[0]+'」の民意のかけらを獲得！':completedId==='numbers'?'数字コードを解読！':'手続きの流れを復旧！'}</h2><p>${basic?basic[1]+'の知識が、民意のルートを一つ復旧しました。':'正解が、閉ざされていた次の扉を開きました。'}</p><button class="btn primary compact" data-action="map">マップへ</button>`;$('#modal').classList.remove('hidden');$('#modalBody [data-action="map"]').onclick=()=>{$('#modal').classList.add('hidden');renderMap()};}
   function reviewCompleteModal(){$('#modalBody').innerHTML='<p class="eyebrow">REVIEW COMPLETE</p><h2>苦手復習、完了！</h2><p>間違えた問題をもう一度確認しました。</p><button class="btn primary compact" data-action="result">結果へ戻る</button>';$('#modal').classList.remove('hidden');$('#modalBody [data-action="result"]').onclick=()=>{$('#modal').classList.add('hidden');showResult()};}
   function showResult(){stopBossMusic();screen('resultScreen');sfx('clear');pulse('chapter-clear');const rate=state.total?state.firstCorrect/state.total:0;const rank=rate>=.9?'S':rate>=.8?'A':rate>=.65?'B':'C';$('#rankSeal').textContent=rank;$('#accuracyResult').textContent=Math.round(rate*100)+'%';$('#scoreResult').textContent=`${state.firstCorrect} / ${state.total}`;const sec=Math.round((Date.now()-state.started)/1000);$('#timeResult').textContent=`${Math.floor(sec/60)}:${String(sec%60).padStart(2,'0')}`;const weak=Object.entries(state.errors).sort((a,b)=>b[1]-a[1]).slice(0,2).map(x=>x[0]);$('#weakResult').textContent=weak.length?'復習ポイント：'+weak.join('・'):'全分野を初回で突破しました！';}
   function review(){const all=[...Object.values(Q.basic).flat(),...Q.numbers,...Q.boss];let qs=all.filter(q=>state.wrongIds.includes(q.q));if(!qs.length){const weak=Object.entries(state.errors).sort((a,b)=>b[1]-a[1])[0]?.[0];qs=all.filter(q=>(q.tag||'')===weak).slice(0,5)}if(!qs.length)qs=shuffle(Q.boss).slice(0,4);session={id:'review',title:'苦手復習',qs:shuffle(qs).slice(0,6),index:0,type:'choice',attempts:0,answered:false,scored:false};save();showQuestion();}

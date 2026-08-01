@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#071b3d">
   <title>第4章 初めての国会で、大失敗しました。</title>
-  <link rel="stylesheet" href="styles.css?v=20260801-2">
+  <link rel="stylesheet" href="styles.css?v=20260801-3">
   <link rel="stylesheet" href="responsive.css">
 </head>
 <body>
@@ -52,13 +52,13 @@
         <button class="icon-btn" data-action="help" aria-label="遊び方">？</button>
       </div>
       <div id="stageBoardWrap" class="stage-board-wrap">
-        <img id="stageBoard" class="stage-board" src="assets/stage1-board.svg" alt="選挙・国会・内閣・裁判所・地方自治の5つの門を進む15マスの盤面">
+        <img id="stageBoard" class="stage-board" src="assets/stage1-board-v2.webp" alt="政治の都の5施設を巡る15マスのすごろく盤面">
         <div id="stageGrid" class="stage-grid"></div>
       </div>
       <div class="map-footer">
-        <div class="hero-token"><span class="token-art benzo-token" aria-hidden="true"></span><p>北中勉三<br><small>未来のリーダー候補？</small></p></div>
+        <div class="hero-token"><img src="assets/duo-token-official-v2.webp" alt="北中勉三とヒロポン"><p>勉三＆ヒロポン<br><small>民意のルート復旧隊</small></p></div>
         <p id="mapHint">5つの分野を攻略し、民意のかけらを集めよう。</p>
-        <span class="spirit-token" aria-label="民意の精霊"></span>
+        <div class="footer-shards" id="footerShards" aria-label="民意のかけら"></div>
         <button id="reviewBtn" class="btn secondary compact hidden" data-action="review">苦手だけ復習</button>
       </div>
     </section>
@@ -82,6 +82,7 @@
     <section id="resultScreen" class="screen result-screen">
       <div class="result-card">
         <p class="eyebrow">CHAPTER CLEAR</p>
+        <img class="clear-medal" src="assets/civics-medal.svg" alt="公民王メダル">
         <div id="rankSeal" class="rank-seal"><span>S</span></div>
         <h2>民意のルート、完全復旧！</h2>
         <div class="result-stats">
@@ -91,6 +92,7 @@
         </div>
         <div class="leader-badge"><span>獲得称号</span><strong>民意をつなぐ者</strong></div>
         <p id="weakResult" class="weak-result"></p>
+        <div class="ending-dialogue"><img src="assets/hiropon-official-v2.webp" alt="ヒロポン"><p><strong>ヒロポン</strong><br>国民の声は、選挙から政治の仕組みを通って届く。今日取り戻したルートを忘れるでないぞ！</p></div>
         <p class="ending">政治の仕組みを救った勉三は、経済都市の危機を任されることになった。</p>
         <div class="title-actions">
           <button class="btn primary" data-action="review">苦手を復習</button>
@@ -104,6 +106,6 @@
     </div>
   </main>
   <script src="questions.js"></script>
-  <script src="app.js?v=20260801-2"></script>
+  <script src="app.js?v=20260801-3"></script>
 </body>
 </html>

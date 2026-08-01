@@ -159,7 +159,7 @@ button{font:inherit}
 .title-card{backdrop-filter:blur(3px)}
 .portrait{overflow:hidden;background:#f8f0dc}
 .portrait .portrait-art{display:block;width:100%;height:100%;border-radius:0;background-image:url("assets/benzo.webp");background-size:cover;background-repeat:no-repeat;background-position:center top}
-.portrait.hiropon .portrait-art{background-image:url("assets/hiropon.webp");background-size:contain;background-position:center bottom}
+.portrait.hiropon .portrait-art{background-image:url("assets/hiropon-official-v2.webp");background-size:contain;background-position:center bottom}
 .stage-board-wrap{position:relative;z-index:1;flex:1;min-height:0;border:2px solid #b99b55;border-radius:14px;overflow:hidden;background:#071a37;box-shadow:0 8px 22px #00112d99}
 .stage-board-wrap:not(.advanced){background-image:linear-gradient(#06142b66,#06142baa),url("assets/political-capital.webp");background-size:cover;background-position:center 57%}
 .stage-board{display:block;width:100%;height:100%;object-fit:cover}
@@ -174,6 +174,7 @@ button{font:inherit}
 .stage-grid.board-mode{display:block}
 .stage-grid.board-mode .stage-card{position:absolute;width:142px;min-height:52px;height:52px;padding:4px 9px;border-color:#ffe69b;background:linear-gradient(#214f7b,#0b284e);box-shadow:0 5px 12px #00112ddd;transform:translate(-50%,-50%)}
 .stage-grid.board-mode .stage-card .stage-icon,.stage-grid.board-mode .stage-card p{display:none}
+.stage-grid.board-mode .stage-card .stage-emblem{display:none}
 .stage-grid.board-mode .stage-card h3{font-size:14px;margin:0}
 .stage-grid.board-mode .stage-card h3:after{content:" に挑戦"}
 .stage-grid.board-mode .stage-card[data-stage="election"]{left:12%;top:72%}
@@ -206,7 +207,7 @@ button{font:inherit}
 .stage-board-wrap.advanced .stage-card[data-stage="sequences"]{background:linear-gradient(90deg,#211b3d 0,#66529a 47%,#1c1735 53%,#4b3b7d 100%)}
 .stage-board-wrap.advanced .stage-card[data-stage="boss"]{background:linear-gradient(90deg,#28182b 0,#7a3b51 47%,#251426 53%,#57263c 100%)}
 .stage-board-wrap.advanced .stage-card.locked{opacity:.68;filter:grayscale(.5);box-shadow:inset 0 0 0 5px #111827,inset 0 0 24px #0007,0 12px 22px #000b}
-.stage-board-wrap.advanced .stage-card.locked:after{content:"🔒";width:42px;height:42px;display:grid;place-items:center;background:#182337;border:3px solid #9b8b69;font-size:20px;bottom:15px}
+.stage-board-wrap.advanced .stage-card.locked:after{content:"";display:none}
 .reward-item{width:140px;margin:0 auto 8px;display:flex;flex-direction:column;align-items:center;color:#6d4b0e;font-weight:800}
 .reward-item img{width:92px;height:110px;object-fit:contain;filter:drop-shadow(0 0 10px #ffd966)}
 .reward-item span{font-size:12px;letter-spacing:.08em}
@@ -222,4 +223,40 @@ button{font:inherit}
 .stage-board-wrap{min-height:330px}
 .stage-board{object-fit:cover}
 .spirit-token{display:none}
+}
+
+/* 第2章基準の正式アセット実装 */
+.hero-token img{width:55px;height:55px;object-fit:contain;filter:drop-shadow(0 3px 4px #0008)}
+.footer-shards{display:flex;gap:3px;align-items:center}
+.footer-shards img{width:30px;height:38px;object-fit:contain;filter:grayscale(1) brightness(.42);opacity:.55}
+.footer-shards img.found{filter:drop-shadow(0 0 7px #ffe37a);opacity:1}
+.stage-emblem{width:58px;height:70px;object-fit:contain;filter:drop-shadow(0 0 7px #ffe37a);z-index:1}
+.board-duo-token{position:absolute;width:8.8%;height:auto;object-fit:contain;z-index:8;pointer-events:none;transform:translate(-50%,-70%);filter:drop-shadow(0 5px 5px #001027aa)}
+.token-at-election{left:7%;top:91%}.token-at-diet{left:20%;top:51%}.token-at-cabinet{left:50%;top:91%}.token-at-court{left:79%;top:48%}.token-at-local{left:93%;top:79%}
+.stage-board-wrap:not(.advanced){background:#071a37}
+.stage-board{object-position:center}
+.stage-grid.board-mode .stage-card{width:136px;height:50px;min-height:50px;border:2px solid #f4d77b;border-radius:24px;background:linear-gradient(#244f78,#0a274d);box-shadow:0 5px 12px #00112ddd,inset 0 0 0 2px #ffffff18}
+.stage-grid.board-mode .stage-card:before{content:"";position:absolute;inset:3px;border:1px solid #fff2ae66;border-radius:20px}
+.stage-grid.board-mode .stage-card h3:after{content:""}
+.stage-grid.board-mode .stage-card.cleared{background:linear-gradient(#7e6927,#3f3515)}
+.stage-grid.board-mode .stage-card .clear-mark{width:30px;height:34px;font-size:0;top:-14px;right:-7px}
+.stage-board-wrap.advanced .stage-grid{grid-template-columns:repeat(3,1fr)!important;padding:18px 24px 16px;gap:22px}
+.stage-board-wrap.advanced .stage-card.gate-card{padding:8px 12px 18px;border:2px solid #d8bc69;border-radius:14px;background:linear-gradient(#10284d,#06172d);overflow:hidden}
+.stage-board-wrap.advanced .stage-card.gate-card:before,.stage-board-wrap.advanced .stage-card.gate-card:after{display:none}
+.gate-art{display:block;width:100%;height:68%;min-height:160px;object-fit:contain;filter:drop-shadow(0 7px 8px #000a);z-index:1}
+.gate-card h3{margin:1px 0 3px!important;font-size:20px!important}
+.gate-card p{padding:5px 8px!important;font-size:12px!important}
+.gate-card.locked .gate-art{filter:grayscale(.7) brightness(.55)}
+.gate-card.locked .gate-lock{position:absolute;left:50%;top:40%;width:42px;height:49px;transform:translate(-50%,-50%);border:4px solid #c7b47a;border-radius:7px;background:#17233b;z-index:3;box-shadow:0 4px 12px #000a}
+.gate-card.locked .gate-lock:before{content:"";position:absolute;left:8px;right:8px;top:-25px;height:28px;border:5px solid #c7b47a;border-bottom:0;border-radius:18px 18px 0 0}
+.gate-card .clear-mark{right:10px;top:8px;padding:4px 7px;border-radius:10px;background:#705a19;color:#fff0a5;font-size:11px}
+.gate-reward img{width:116px;height:130px}
+.clear-medal{position:absolute;width:104px;height:104px;left:calc(50% - 190px);top:82px;filter:drop-shadow(0 0 12px #ffe26e)}
+.ending-dialogue{display:flex;align-items:center;gap:12px;max-width:650px;margin:10px auto 2px;padding:8px 14px;border:1px solid #d5b95d;border-radius:10px;background:#071a35d9;text-align:left;color:#edf4fa}
+.ending-dialogue img{width:66px;height:76px;object-fit:contain;flex:0 0 auto}
+.ending-dialogue p{margin:0;line-height:1.5}.ending-dialogue strong{color:#ffe38a}
+@media(max-width:800px){
+  .board-duo-token{width:12%}.stage-grid.board-mode .stage-card{width:105px;height:42px;min-height:42px}
+  .stage-board-wrap.advanced .stage-grid{padding:12px;gap:9px}.gate-art{min-height:120px}.gate-card h3{font-size:15px!important}
+  .clear-medal{width:70px;height:70px;left:18px;top:72px}.ending-dialogue img{width:50px;height:58px}
 }
