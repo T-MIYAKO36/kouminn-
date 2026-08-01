@@ -6,7 +6,7 @@
     <linearGradient id="road" x2="0" y2="1"><stop stop-color="#fff7d2"/><stop offset="1" stop-color="#cfb76f"/></linearGradient>
     <filter id="glow"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
   </defs>
-  <rect width="1280" height="470" rx="22" fill="url(#sky)"/>
+  <rect width="1280" height="470" rx="22" fill="#06152b" opacity=".38"/>
   <path d="M70 360 C180 360 195 245 300 245 S410 365 520 365 S625 215 745 215 S860 350 970 350 S1060 190 1210 190" fill="none" stroke="#3c2e1a" stroke-width="54" stroke-linecap="round"/>
   <path d="M70 360 C180 360 195 245 300 245 S410 365 520 365 S625 215 745 215 S860 350 970 350 S1060 190 1210 190" fill="none" stroke="url(#road)" stroke-width="42" stroke-linecap="round" stroke-dasharray="54 12"/>
   <g font-family="sans-serif" text-anchor="middle" fill="#fff" font-weight="700">
