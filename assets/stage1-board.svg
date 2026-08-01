@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 470" role="img" aria-labelledby="title desc">
+  <title id="title">ステージ1 民意のかけらを集める盤面</title>
+  <desc id="desc">選挙、国会、内閣、裁判所、地方自治の五つの門を結ぶ十五マスのすごろく盤面</desc>
+  <defs>
+    <linearGradient id="sky" x2="0" y2="1"><stop stop-color="#174c75"/><stop offset="1" stop-color="#071a37"/></linearGradient>
+    <linearGradient id="road" x2="0" y2="1"><stop stop-color="#fff7d2"/><stop offset="1" stop-color="#cfb76f"/></linearGradient>
+    <filter id="glow"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <rect width="1280" height="470" rx="22" fill="url(#sky)"/>
+  <path d="M70 360 C180 360 195 245 300 245 S410 365 520 365 S625 215 745 215 S860 350 970 350 S1060 190 1210 190" fill="none" stroke="#3c2e1a" stroke-width="54" stroke-linecap="round"/>
+  <path d="M70 360 C180 360 195 245 300 245 S410 365 520 365 S625 215 745 215 S860 350 970 350 S1060 190 1210 190" fill="none" stroke="url(#road)" stroke-width="42" stroke-linecap="round" stroke-dasharray="54 12"/>
+  <g font-family="sans-serif" text-anchor="middle" fill="#fff" font-weight="700">
+    <g transform="translate(80 314)"><rect width="168" height="82" rx="14" fill="#7b2532" stroke="#f1cf69" stroke-width="4"/><text x="84" y="32" font-size="15">第1の門</text><text x="84" y="61" font-size="25">選挙</text></g>
+    <g transform="translate(250 92)"><rect width="168" height="82" rx="14" fill="#244f8e" stroke="#f1cf69" stroke-width="4"/><text x="84" y="32" font-size="15">第2の門</text><text x="84" y="61" font-size="25">国会</text></g>
+    <g transform="translate(548 305)"><rect width="168" height="82" rx="14" fill="#7a5a20" stroke="#f1cf69" stroke-width="4"/><text x="84" y="32" font-size="15">第3の門</text><text x="84" y="61" font-size="25">内閣</text></g>
+    <g transform="translate(782 70)"><rect width="168" height="82" rx="14" fill="#554187" stroke="#f1cf69" stroke-width="4"/><text x="84" y="32" font-size="15">第4の門</text><text x="84" y="61" font-size="25">裁判所</text></g>
+    <g transform="translate(1038 258)"><rect width="168" height="82" rx="14" fill="#26735d" stroke="#f1cf69" stroke-width="4"/><text x="84" y="32" font-size="15">第5の門</text><text x="84" y="61" font-size="25">地方自治</text></g>
+  </g>
+  <g fill="#fef5ca" stroke="#8a671b" stroke-width="4">
+    <circle cx="70" cy="360" r="25"/><circle cx="150" cy="337" r="25"/><circle cx="224" cy="272" r="25"/>
+    <circle cx="300" cy="245" r="25"/><circle cx="382" cy="290" r="25"/><circle cx="460" cy="352" r="25"/>
+    <circle cx="545" cy="350" r="25"/><circle cx="625" cy="285" r="25"/><circle cx="710" cy="222" r="25"/>
+    <circle cx="795" cy="232" r="25"/><circle cx="870" cy="300" r="25"/><circle cx="955" cy="350" r="25"/>
+    <circle cx="1040" cy="305" r="25"/><circle cx="1110" cy="225" r="25"/><circle cx="1208" cy="190" r="25"/>
+  </g>
+  <g font-family="sans-serif" text-anchor="middle" dominant-baseline="central" fill="#102443" font-weight="900" font-size="18">
+    <text x="70" y="360">1</text><text x="150" y="337">問</text><text x="224" y="272">問</text><text x="300" y="245">◆</text>
+    <text x="382" y="290">問</text><text x="460" y="352">問</text><text x="545" y="350">◆</text><text x="625" y="285">問</text>
+    <text x="710" y="222">問</text><text x="795" y="232">◆</text><text x="870" y="300">問</text><text x="955" y="350">問</text>
+    <text x="1040" y="305">◆</text><text x="1110" y="225">問</text><text x="1208" y="190">◆</text>
+  </g>
+  <g filter="url(#glow)" fill="#ffdf72"><circle cx="300" cy="245" r="7"/><circle cx="545" cy="350" r="7"/><circle cx="795" cy="232" r="7"/><circle cx="1040" cy="305" r="7"/><circle cx="1208" cy="190" r="7"/></g>
+</svg>

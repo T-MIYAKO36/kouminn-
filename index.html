@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#071b3d">
+  <title>第4章 初めての国会で、大失敗しました。</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="responsive.css">
+</head>
+<body>
+  <main id="game" class="game-shell" aria-live="polite">
+    <header class="topbar">
+      <div class="brand"><span>PROJECT HIROPON</span><strong>公民王への道</strong></div>
+      <div class="chapter"><span>第4章</span><strong id="locationLabel">政治の都・中央広場</strong></div>
+      <div class="status"><span>民意のかけら</span><strong id="shardCount">0 / 5</strong></div>
+      <button id="soundBtn" class="sound-btn" data-action="sound" aria-label="音を切る" aria-pressed="true">♪</button>
+    </header>
+
+    <section id="titleScreen" class="screen title-screen active">
+      <div class="skyline" aria-hidden="true">
+        <div class="diet-building"><i></i><b></b><em></em></div>
+        <div class="route route-a"></div><div class="route route-b"></div>
+        <span class="route-node n1"></span><span class="route-node n2"></span><span class="route-node n3"></span>
+      </div>
+      <div class="title-card">
+        <p class="eyebrow">政治の都編</p>
+        <h1>初めての国会で、<br><span>大失敗しました。</span></h1>
+        <p class="subtitle">～消えた民意を取り戻せ～</p>
+        <div class="title-actions">
+          <button class="btn primary" data-action="new">はじめる</button>
+          <button id="continueBtn" class="btn secondary" data-action="continue">つづきから</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="storyScreen" class="screen story-screen">
+      <div class="scene-card">
+        <div class="portrait benzo" aria-label="北中勉三"><span class="portrait-art"></span></div>
+        <div class="dialogue">
+          <span class="speaker">北中 勉三</span>
+          <p id="storyText">国民から届いた要望書を、全部同じ場所へ送っちゃった……！</p>
+          <button class="btn primary compact" data-action="story-next">つぎへ</button>
+        </div>
+        <div class="portrait hiropon" aria-label="ヒロポン"><span class="portrait-art"></span></div>
+      </div>
+    </section>
+
+    <section id="mapScreen" class="screen map-screen">
+      <div class="mission-head">
+        <div><span id="stageKicker">MISSION SELECT</span><h2 id="stageTitle">民意のルートを復旧せよ</h2></div>
+        <button class="icon-btn" data-action="help" aria-label="遊び方">？</button>
+      </div>
+      <div id="stageBoardWrap" class="stage-board-wrap">
+        <img id="stageBoard" class="stage-board" src="assets/stage1-board.svg" alt="選挙・国会・内閣・裁判所・地方自治の5つの門を進む15マスの盤面">
+        <div id="stageGrid" class="stage-grid"></div>
+      </div>
+      <div class="map-footer">
+        <div class="hero-token"><span class="token-art benzo-token" aria-hidden="true"></span><p>北中勉三<br><small>未来のリーダー候補？</small></p></div>
+        <p id="mapHint">5つの分野を攻略し、民意のかけらを集めよう。</p>
+        <span class="spirit-token" aria-label="民意の精霊"></span>
+        <button id="reviewBtn" class="btn secondary compact hidden" data-action="review">苦手だけ復習</button>
+      </div>
+    </section>
+
+    <section id="quizScreen" class="screen quiz-screen">
+      <div class="quiz-head">
+        <span id="quizCategory" class="category">国会</span>
+        <div class="progress"><i id="quizProgress"></i></div>
+        <span id="quizNumber">1 / 2</span>
+      </div>
+      <div class="question-card">
+        <p id="questionType" class="question-type">基本知識</p>
+        <h2 id="questionText"></h2>
+        <div id="choiceList" class="choices"></div>
+        <div id="sortArea" class="sort-area hidden"></div>
+        <div id="feedback" class="feedback hidden"></div>
+        <button id="nextQuestionBtn" class="btn primary hidden" data-action="next-question">つぎへ</button>
+      </div>
+    </section>
+
+    <section id="resultScreen" class="screen result-screen">
+      <div class="result-card">
+        <p class="eyebrow">CHAPTER CLEAR</p>
+        <div id="rankSeal" class="rank-seal">S</div>
+        <h2>民意のルート、完全復旧！</h2>
+        <div class="result-stats">
+          <div><span>正解率</span><strong id="accuracyResult">100%</strong></div>
+          <div><span>初回正解</span><strong id="scoreResult">23 / 23</strong></div>
+          <div><span>かかった時間</span><strong id="timeResult">--:--</strong></div>
+        </div>
+        <div class="leader-badge"><span>獲得称号</span><strong>民意をつなぐ者</strong></div>
+        <p id="weakResult" class="weak-result"></p>
+        <p class="ending">政治の仕組みを救った勉三は、経済都市の危機を任されることになった。</p>
+        <div class="title-actions">
+          <button class="btn primary" data-action="review">苦手を復習</button>
+          <button class="btn secondary" data-action="restart">もう一度挑戦</button>
+        </div>
+      </div>
+    </section>
+
+    <div id="modal" class="modal hidden" role="dialog" aria-modal="true">
+      <div class="modal-card"><button class="modal-close" data-action="close-modal">×</button><div id="modalBody"></div></div>
+    </div>
+  </main>
+  <script src="questions.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

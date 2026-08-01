@@ -1,0 +1,39 @@
+body {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+@media (min-width: 801px) {
+  .game-shell {
+    width: min(100vw, 1280px, calc(100dvh * 16 / 9));
+    min-height: 0;
+  }
+}
+
+@media (max-height: 760px) and (min-width: 801px) {
+  .quiz-screen {
+    padding: 18px 8%;
+    overflow: auto;
+  }
+
+  .question-card {
+    min-height: 390px;
+    padding: 20px 28px;
+  }
+
+  .result-card {
+    padding: 18px 32px;
+  }
+
+  .rank-seal {
+    width: 72px;
+    height: 72px;
+    font-size: 46px;
+  }
+
+  .result-card h2 {
+    margin: 10px 0;
+  }
+}
