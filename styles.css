@@ -159,8 +159,9 @@ button{font:inherit}
 .title-card{backdrop-filter:blur(3px)}
 .portrait{overflow:hidden;background:#f8f0dc}
 .portrait .portrait-art{display:block;width:100%;height:100%;border-radius:0;background-image:url("assets/benzo.webp");background-size:cover;background-repeat:no-repeat;background-position:center top}
-.portrait.hiropon .portrait-art{background-image:url("assets/hiropon.webp")}
+.portrait.hiropon .portrait-art{background-image:url("assets/hiropon.webp");background-size:contain;background-position:center bottom}
 .stage-board-wrap{position:relative;z-index:1;flex:1;min-height:0;border:2px solid #b99b55;border-radius:14px;overflow:hidden;background:#071a37;box-shadow:0 8px 22px #00112d99}
+.stage-board-wrap:not(.advanced){background-image:linear-gradient(#06142b66,#06142baa),url("assets/political-capital.webp");background-size:cover;background-position:center 57%}
 .stage-board{display:block;width:100%;height:100%;object-fit:cover}
 .stage-board-wrap.advanced .stage-board{display:none}
 .stage-board-wrap.advanced{border:2px solid #b99b55;overflow:hidden;background-size:cover;background-position:center;box-shadow:0 8px 22px #00112d99}
@@ -184,6 +185,36 @@ button{font:inherit}
 .stage-grid.board-mode .stage-card .clear-mark{right:5px;top:2px;font-size:15px}
 .token-art{display:block;width:48px;height:48px;border-radius:50%;border:3px solid var(--gold);background-image:url("assets/benzo.webp");background-size:cover;background-position:center 12%;background-color:#f7edda}
 .spirit-token{display:block;flex:0 0 54px;width:54px;height:54px;background-image:url("assets/minii-spirit.webp");background-size:cover;background-position:center;border-radius:50%;border:2px solid #f5d978;background-color:#f9f1dc;box-shadow:0 0 14px #ffe78b88}
+
+/* Collectibles and stage doors */
+.shard-mini{display:flex;gap:4px;margin-top:2px}
+.mini-shard{width:9px;height:11px;display:block;transform:skewY(-8deg);clip-path:polygon(50% 0,100% 28%,88% 82%,50% 100%,12% 82%,0 28%);background:#33465c;border:1px solid #718297;filter:grayscale(1)}
+.mini-shard.found{background:linear-gradient(135deg,#fff5a8,#e3aa2c 55%,#7cc8ff);filter:none;box-shadow:0 0 7px #ffe887}
+.stage-grid.board-mode .stage-card .clear-mark{width:29px;height:35px;color:transparent;background-size:contain;background-position:center;background-repeat:no-repeat;filter:drop-shadow(0 0 5px #ffe788)}
+.stage-grid.board-mode .stage-card[data-stage="election"] .clear-mark{background-image:url("assets/shard-election.svg")}
+.stage-grid.board-mode .stage-card[data-stage="diet"] .clear-mark{background-image:url("assets/shard-diet.svg")}
+.stage-grid.board-mode .stage-card[data-stage="cabinet"] .clear-mark{background-image:url("assets/shard-cabinet.svg")}
+.stage-grid.board-mode .stage-card[data-stage="court"] .clear-mark{background-image:url("assets/shard-court.svg")}
+.stage-grid.board-mode .stage-card[data-stage="local"] .clear-mark{background-image:url("assets/shard-local.svg")}
+.stage-board-wrap.advanced .stage-grid{padding:30px 24px 20px;gap:22px;align-items:stretch}
+.stage-board-wrap.advanced .stage-card{min-height:0;height:100%;padding:72px 20px 28px;border:5px ridge #cba84d;border-bottom-width:10px;border-radius:48% 48% 12px 12px;background:linear-gradient(90deg,#0b2448 0,#26588b 47%,#0a2141 53%,#183f70 100%);box-shadow:inset 0 0 0 5px #07172d,inset 0 0 24px #75bfff33,0 12px 22px #000b;isolation:isolate}
+.stage-board-wrap.advanced .stage-card:before{content:"";position:absolute;inset:17px 15px 18px;border:2px solid #d9bd6a88;border-radius:48% 48% 7px 7px;background:linear-gradient(90deg,transparent 48%,#e9d28655 49% 51%,transparent 52%),linear-gradient(#fff1a311,transparent 38%);z-index:-1}
+.stage-board-wrap.advanced .stage-card:after{content:"";position:absolute;left:50%;bottom:18px;width:12px;height:12px;border-radius:50%;background:#ffeaa0;box-shadow:0 0 0 4px #8b641d,0 0 13px #ffe071;transform:translateX(-50%);z-index:2}
+.stage-board-wrap.advanced .stage-card .stage-icon{display:grid;place-items:center;width:82px;height:82px;margin-bottom:12px;border-radius:50%;font-family:serif;font-size:44px;color:#fff7cc;background:radial-gradient(circle at 35% 30%,#3e83b7,#102b57 65%);border:5px double #f0d476;box-shadow:0 0 18px #ffd96d66;z-index:2}
+.stage-board-wrap.advanced .stage-card h3{font-family:serif;font-size:22px;color:#fff7d3;text-shadow:0 2px 3px #000;z-index:2}
+.stage-board-wrap.advanced .stage-card p{max-width:220px;padding:8px 12px;border-top:1px solid #d8bc6a88;border-bottom:1px solid #d8bc6a88;background:#06172b99;color:#d9eafb;z-index:2}
+.stage-board-wrap.advanced .stage-card[data-stage="sequences"]{background:linear-gradient(90deg,#211b3d 0,#66529a 47%,#1c1735 53%,#4b3b7d 100%)}
+.stage-board-wrap.advanced .stage-card[data-stage="boss"]{background:linear-gradient(90deg,#28182b 0,#7a3b51 47%,#251426 53%,#57263c 100%)}
+.stage-board-wrap.advanced .stage-card.locked{opacity:.68;filter:grayscale(.5);box-shadow:inset 0 0 0 5px #111827,inset 0 0 24px #0007,0 12px 22px #000b}
+.stage-board-wrap.advanced .stage-card.locked:after{content:"🔒";width:42px;height:42px;display:grid;place-items:center;background:#182337;border:3px solid #9b8b69;font-size:20px;bottom:15px}
+.reward-item{width:140px;margin:0 auto 8px;display:flex;flex-direction:column;align-items:center;color:#6d4b0e;font-weight:800}
+.reward-item img{width:92px;height:110px;object-fit:contain;filter:drop-shadow(0 0 10px #ffd966)}
+.reward-item span{font-size:12px;letter-spacing:.08em}
+.reward-glyph>span{width:92px;height:92px;display:grid;place-items:center;border-radius:50%;font-family:serif;font-size:50px;color:#fff7c9;background:radial-gradient(circle at 35% 30%,#4b91bf,#102b57 65%);border:7px double #e7c865;box-shadow:0 0 18px #e7bd58}
+.reward-glyph.procedure>span{background:radial-gradient(circle at 35% 30%,#9a79cb,#342658 68%)}
+.reward-glyph b{margin-top:6px;color:#6d4b0e}
+.rank-seal{background:#173a70 url("assets/civics-medal.svg") center/contain no-repeat;border:0;outline:0;border-radius:0;width:112px;height:126px;font-size:48px;color:#fff6bd;text-shadow:0 3px 0 #4f2f08;overflow:visible}
+.rank-seal span{font-size:48px;color:#fff6bd;text-shadow:0 3px 0 #4f2f08;transform:translateY(5px)}
 @media(max-width:800px){.stage-grid.board-mode{overflow:visible}
 .quiz-screen[data-stage="boss"] .quiz-head,.quiz-screen[data-stage="boss"] .question-card{width:100%}
 .stage-grid.board-mode .stage-card{width:104px;height:44px;min-height:44px}
