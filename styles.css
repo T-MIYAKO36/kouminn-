@@ -153,6 +153,64 @@ button{font:inherit}
 .result-card h2{font-size:23px}
 }
 
+/* Chapter 4 v2: short-play RPG upgrade */
+.sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.title-cover{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;filter:saturate(1.03) brightness(.86)}
+.title-screen::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 56%,rgba(2,10,25,.83) 100%);pointer-events:none}
+.title-launcher{z-index:3;top:auto;bottom:4.2%;left:50%;transform:translateX(-50%);width:min(620px,74%);padding:14px 24px 18px;background:rgba(4,19,44,.88);backdrop-filter:blur(5px);border-width:2px;text-align:center}
+.title-launcher .launch-copy{margin:0 0 10px;color:#ffe49a;font-weight:900;letter-spacing:.08em;font-size:clamp(15px,1.8vw,22px)}
+.title-launcher .title-actions{margin-top:0}
+
+.stage-core,.footer-core,.battle-core{position:relative;display:grid;place-items:center;border-radius:50%;background:radial-gradient(circle,#fffbe6 0 20%,#eacb68 21% 34%,#0c2a58 35% 60%,#e9c665 61% 66%,#091c3e 67%);box-shadow:0 0 14px rgba(255,221,102,.72),inset 0 0 8px #fff}
+.stage-core{width:58px;height:58px;margin:0 auto 5px;animation:coreFloat 2.3s ease-in-out infinite}
+.stage-core::before,.core-reward::before{content:"";position:absolute;inset:-7px;border:2px solid rgba(255,220,112,.66);border-radius:50%;border-left-color:transparent;animation:coreSpin 4s linear infinite}
+.stage-core img,.footer-core img,.battle-core img{width:58%;height:58%;object-fit:contain;filter:drop-shadow(0 1px 1px #fff)}
+.stage-card.cleared .stage-core{box-shadow:0 0 24px #ffe36f,0 0 44px rgba(255,220,86,.55)}
+.footer-shards{gap:8px}.footer-core{width:38px;height:38px;opacity:.28;filter:grayscale(1);transition:.25s}.footer-core.found{opacity:1;filter:none;animation:corePulse 1.8s infinite}
+.battle-core{width:42px;height:42px;animation:corePulse 1.5s infinite}
+.core-election{--core:#ff6b64}.core-diet{--core:#5bc8ff}.core-cabinet{--core:#ffc34f}.core-court{--core:#b69cff}.core-local{--core:#74e2a4}
+.stage-core,.footer-core,.battle-core{outline:2px solid color-mix(in srgb,var(--core,#ffe16c) 70%,white)}
+.core-tray{display:flex;align-items:center;justify-content:center;gap:10px;margin:8px auto 15px;padding:8px 14px;border:1px solid rgba(232,197,100,.6);border-radius:999px;background:#081b3f;color:#ffe8a6;font-weight:900;width:max-content;max-width:100%}
+.core-reward{position:relative;width:170px!important;height:190px;margin:8px auto!important;display:grid!important;place-items:center;background:radial-gradient(circle at 50% 42%,rgba(255,248,200,.96),rgba(21,52,93,.95) 60%,#06152f)!important;overflow:visible!important}
+.core-reward img{width:112px!important;height:112px!important;z-index:2;filter:drop-shadow(0 0 12px #ffe780)}
+.core-reward b{color:#ffe89c;z-index:2}.core-rings{position:absolute;width:140px;height:140px;border:4px double #f4cf62;border-radius:50%;animation:coreSpin 5s linear infinite;box-shadow:0 0 28px rgba(255,223,116,.6)}
+
+.mission-choices{grid-template-columns:repeat(3,1fr)!important;gap:14px!important;margin-top:22px!important}
+.mission-choices .choice{position:relative;min-height:125px;text-align:center!important;display:grid;place-items:center;padding:34px 12px 14px!important;border:2px solid #d8b95a!important;background:linear-gradient(180deg,#173d70,#091d3e)!important;color:white!important;box-shadow:inset 0 0 20px rgba(104,179,255,.12),0 7px 0 #05142d!important}
+.mission-choices .choice::after{content:"ROUTE";position:absolute;top:9px;left:50%;transform:translateX(-50%);font-size:10px;letter-spacing:.2em;color:#f4d87b}
+.route-light{position:absolute;top:21px;width:16px;height:16px;border-radius:50%;background:#69d8ff;box-shadow:0 0 16px #69d8ff}
+.mission-choices .choice.correct{background:linear-gradient(#18845c,#0d553f)!important;box-shadow:0 0 26px #70efbd!important}
+.mission-choices .choice.wrong{background:linear-gradient(#8a3042,#4a1a28)!important}
+
+.interaction-area{display:grid;place-items:center;margin-top:12px}
+.keypad-console{width:min(390px,92%);padding:18px 22px;border:3px solid #d8b95a;border-radius:18px;background:linear-gradient(145deg,#06142d,#12365f);box-shadow:0 12px 28px rgba(0,0,0,.35),inset 0 0 22px rgba(86,184,255,.14);text-align:center;color:#d9eaff}
+.lock-status{font-size:12px;letter-spacing:.13em;color:#e9cd71;margin-bottom:9px}.lock-status b{float:right}
+.keypad-display{height:60px;display:grid;place-items:center;background:#020b16;border:2px inset #7893a8;border-radius:8px;color:#8fffd5;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:38px;font-weight:900;letter-spacing:.28em;text-shadow:0 0 12px #44dcb0;margin-bottom:13px;padding-left:.28em}
+.keypad-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.keypad-grid button{min-height:48px;border:1px solid #8fb4d5;border-radius:9px;background:linear-gradient(#244e78,#102b51);color:#fff;font-size:20px;font-weight:900;box-shadow:0 3px 0 #020b18;cursor:pointer}.keypad-grid button:active{transform:translateY(2px);box-shadow:0 1px 0 #020b18}.keypad-grid button[data-key="決定"]{font-size:14px;background:linear-gradient(#c89a2f,#7c5715);border-color:#ffe090}.keypad-grid button[data-key="C"]{background:linear-gradient(#714255,#41202f)}
+.keypad-console p{font-size:12px;margin:12px 0 0;color:#a8bdd3}
+
+.quiz-screen[data-stage="numbers"]{background-image:linear-gradient(rgba(5,16,38,.56),rgba(5,16,38,.82)),url('assets/stage2-number-code.webp');background-size:cover;background-position:center}
+.quiz-screen[data-stage="sequences"]{background-image:linear-gradient(rgba(5,16,38,.5),rgba(5,16,38,.82)),url('assets/stage3-procedure-routes.webp');background-size:cover;background-position:center}
+.quiz-screen[data-stage="boss"]{background-image:linear-gradient(rgba(4,7,17,.3),rgba(4,7,17,.72)),url('assets/boss-voiceless-politics.webp');background-size:cover;background-position:center}
+.quiz-screen[data-stage="boss"] .question-card{margin-left:6%;width:58%;background:rgba(255,250,230,.95)}
+.quiz-screen.urgent::after{content:"ROUTE ALERT";position:absolute;right:6%;top:19%;padding:9px 14px;border:2px solid #ff776e;border-radius:8px;background:#5c1020;color:#fff;font-weight:900;letter-spacing:.14em;animation:alertBlink .7s infinite}
+.feedback.warn{display:block;background:#fff0c7;border-color:#df9c31;color:#6e4200}
+
+.game-shell.lock-open{animation:lockFlash .75s ease}.game-shell.core-awaken{animation:coreAwaken .8s ease}
+@keyframes coreSpin{to{transform:rotate(360deg)}}
+@keyframes coreFloat{50%{transform:translateY(-5px)}}
+@keyframes corePulse{50%{box-shadow:0 0 24px var(--core,#ffe36f),inset 0 0 8px #fff}}
+@keyframes lockFlash{35%{filter:brightness(1.65)}70%{transform:scale(1.008)}}
+@keyframes coreAwaken{35%{filter:brightness(1.55) saturate(1.3)}65%{transform:scale(1.01)}}
+@keyframes alertBlink{50%{opacity:.4;box-shadow:0 0 20px #ff4055}}
+
+@media(max-width:800px){
+  .title-launcher{bottom:2%;width:86%;padding:9px 14px 12px}.title-launcher .launch-copy{display:none}
+  .mission-choices{grid-template-columns:1fr!important}.mission-choices .choice{min-height:58px;padding:24px 10px 9px!important}
+  .quiz-screen[data-stage="boss"] .question-card{margin:0 auto;width:92%}
+  .core-tray{gap:5px;padding:5px 8px}.battle-core{width:31px;height:31px}
+}
+
 /* Chapter 4 visual assets */
 .title-screen{background-image:linear-gradient(#06142b44,#06142baa),url("assets/political-capital.webp");background-size:cover;background-position:center}
 .title-screen .skyline{display:none}
@@ -259,4 +317,16 @@ button{font:inherit}
   .board-duo-token{width:12%}.stage-grid.board-mode .stage-card{width:105px;height:42px;min-height:42px}
   .stage-board-wrap.advanced .stage-grid{padding:12px;gap:9px}.gate-art{min-height:120px}.gate-card h3{font-size:15px!important}
   .clear-medal{width:70px;height:70px;left:18px;top:72px}.ending-dialogue img{width:50px;height:58px}
+}
+
+/* v2 final overrides: compact RPG cores without duplicate map icons */
+.stage-grid.board-mode .stage-core{position:absolute;left:-8px;top:-10px;width:34px;height:34px;margin:0;z-index:4}
+.stage-grid.board-mode .stage-core::before{inset:-4px}
+.stage-grid.board-mode .stage-card h3{padding-left:17px}
+.stage-grid.board-mode .stage-card .clear-mark{display:none}
+.footer-shards .footer-core img{width:58%;height:58%;object-fit:contain;opacity:1;filter:drop-shadow(0 1px 1px #fff)}
+.footer-shards .footer-core.found img{filter:drop-shadow(0 0 7px #ffe37a)}
+@media(max-width:800px){
+  .stage-grid.board-mode .stage-core{left:-5px;top:-8px;width:29px;height:29px}
+  .stage-grid.board-mode .stage-card h3{padding-left:12px}
 }

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#071b3d">
   <title>第4章 初めての国会で、大失敗しました。</title>
-  <link rel="stylesheet" href="styles.css?v=20260801-3">
+  <link rel="stylesheet" href="styles.css?v=20260926-2">
   <link rel="stylesheet" href="responsive.css">
 </head>
 <body>
@@ -13,20 +13,15 @@
     <header class="topbar">
       <div class="brand"><span>PROJECT HIROPON</span><strong>公民王への道</strong></div>
       <div class="chapter"><span>第4章</span><strong id="locationLabel">政治の都・中央広場</strong></div>
-      <div class="status"><span>民意のかけら</span><strong id="shardCount">0 / 5</strong><div id="shardMini" class="shard-mini" aria-label="集めた民意のかけら"></div></div>
+      <div class="status"><span>民意コア</span><strong id="shardCount">0 / 5</strong><div id="shardMini" class="shard-mini" aria-label="集めた民意コア"></div></div>
       <button id="soundBtn" class="sound-btn" data-action="sound" aria-label="音を切る" aria-pressed="true">♪</button>
     </header>
 
     <section id="titleScreen" class="screen title-screen active">
-      <div class="skyline" aria-hidden="true">
-        <div class="diet-building"><i></i><b></b><em></em></div>
-        <div class="route route-a"></div><div class="route route-b"></div>
-        <span class="route-node n1"></span><span class="route-node n2"></span><span class="route-node n3"></span>
-      </div>
-      <div class="title-card">
-        <p class="eyebrow">政治の都編</p>
-        <h1>初めての国会で、<br><span>大失敗しました。</span></h1>
-        <p class="subtitle">～消えた民意を取り戻せ～</p>
+      <img class="title-cover" src="assets/ch4-cover-final.webp" alt="第4章 政治のしくみ 公民王への道">
+      <div class="title-card title-launcher">
+        <h1 class="sr-only">第4章 政治のしくみ　公民王への道</h1>
+        <p class="launch-copy">民意のルートを復旧せよ！</p>
         <div class="title-actions">
           <button class="btn primary" data-action="new">はじめる</button>
           <button id="continueBtn" class="btn secondary" data-action="continue">つづきから</button>
@@ -57,8 +52,8 @@
       </div>
       <div class="map-footer">
         <div class="hero-token"><img src="assets/duo-token-official-v2.webp" alt="北中勉三とヒロポン"><p>勉三＆ヒロポン<br><small>民意のルート復旧隊</small></p></div>
-        <p id="mapHint">5つの分野を攻略し、民意のかけらを集めよう。</p>
-        <div class="footer-shards" id="footerShards" aria-label="民意のかけら"></div>
+        <p id="mapHint">5つの分野を攻略し、民意コアを起動しよう。</p>
+        <div class="footer-shards" id="footerShards" aria-label="民意コア"></div>
         <button id="reviewBtn" class="btn secondary compact hidden" data-action="review">苦手だけ復習</button>
       </div>
     </section>
@@ -72,8 +67,10 @@
       <div class="question-card">
         <p id="questionType" class="question-type">基本知識</p>
         <h2 id="questionText"></h2>
+        <div id="coreTray" class="core-tray hidden" aria-label="獲得した民意コア"></div>
         <div id="choiceList" class="choices"></div>
         <div id="sortArea" class="sort-area hidden"></div>
+        <div id="interactionArea" class="interaction-area hidden"></div>
         <div id="feedback" class="feedback hidden"></div>
         <button id="nextQuestionBtn" class="btn primary hidden" data-action="next-question">つぎへ</button>
       </div>
@@ -87,7 +84,7 @@
         <h2>民意のルート、完全復旧！</h2>
         <div class="result-stats">
           <div><span>正解率</span><strong id="accuracyResult">100%</strong></div>
-          <div><span>初回正解</span><strong id="scoreResult">23 / 23</strong></div>
+          <div><span>初回正解</span><strong id="scoreResult">18 / 18</strong></div>
           <div><span>かかった時間</span><strong id="timeResult">--:--</strong></div>
         </div>
         <div class="leader-badge"><span>獲得称号</span><strong>民意をつなぐ者</strong></div>
@@ -106,6 +103,6 @@
     </div>
   </main>
   <script src="questions.js"></script>
-  <script src="app.js?v=20260801-3"></script>
+  <script src="app.js?v=20260926-2"></script>
 </body>
 </html>
