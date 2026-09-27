@@ -186,6 +186,7 @@ button{font:inherit}
 .keypad-console{width:min(390px,92%);padding:18px 22px;border:3px solid #d8b95a;border-radius:18px;background:linear-gradient(145deg,#06142d,#12365f);box-shadow:0 12px 28px rgba(0,0,0,.35),inset 0 0 22px rgba(86,184,255,.14);text-align:center;color:#d9eaff}
 .lock-status{font-size:12px;letter-spacing:.13em;color:#e9cd71;margin-bottom:9px}.lock-status b{float:right}
 .keypad-display{height:60px;display:grid;place-items:center;background:#020b16;border:2px inset #7893a8;border-radius:8px;color:#8fffd5;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:38px;font-weight:900;letter-spacing:.28em;text-shadow:0 0 12px #44dcb0;margin-bottom:13px;padding-left:.28em}
+.keypad-inline-feedback{margin:-3px 0 10px;padding:7px 9px;border-radius:7px;background:#e8f3f8;color:#15304e;font-size:13px;font-weight:800;line-height:1.35;text-align:left}.keypad-inline-feedback.good{background:#dff5e8;color:#14583c}.keypad-inline-feedback.bad{background:#ffe4df;color:#7b2424}
 .keypad-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.keypad-grid button{min-height:48px;border:1px solid #8fb4d5;border-radius:9px;background:linear-gradient(#244e78,#102b51);color:#fff;font-size:20px;font-weight:900;box-shadow:0 3px 0 #020b18;cursor:pointer}.keypad-grid button:active{transform:translateY(2px);box-shadow:0 1px 0 #020b18}.keypad-grid button[data-key="決定"]{font-size:14px;background:linear-gradient(#c89a2f,#7c5715);border-color:#ffe090}.keypad-grid button[data-key="C"]{background:linear-gradient(#714255,#41202f)}
 .keypad-console p{font-size:12px;margin:12px 0 0;color:#a8bdd3}
 
@@ -290,7 +291,7 @@ button{font:inherit}
 .footer-shards img.found{filter:drop-shadow(0 0 7px #ffe37a);opacity:1}
 .stage-emblem{width:58px;height:70px;object-fit:contain;filter:drop-shadow(0 0 7px #ffe37a);z-index:1}
 .board-duo-token{position:absolute;width:8.8%;height:auto;object-fit:contain;z-index:8;pointer-events:none;transform:translate(-50%,-70%);filter:drop-shadow(0 5px 5px #001027aa)}
-.token-at-election{left:7%;top:91%}.token-at-diet{left:20%;top:51%}.token-at-cabinet{left:50%;top:91%}.token-at-court{left:79%;top:48%}.token-at-local{left:93%;top:79%}
+.token-at-election{left:3%;top:99%}.token-at-diet{left:18%;top:55%}.token-at-cabinet{left:44%;top:99%}.token-at-court{left:81%;top:49%}.token-at-local{left:97%;top:94%}
 .stage-board-wrap:not(.advanced){background:#071a37}
 .stage-board{object-position:center}
 .stage-grid.board-mode .stage-card{width:136px;height:50px;min-height:50px;border:2px solid #f4d77b;border-radius:24px;background:linear-gradient(#244f78,#0a274d);box-shadow:0 5px 12px #00112ddd,inset 0 0 0 2px #ffffff18}
@@ -317,6 +318,18 @@ button{font:inherit}
   .board-duo-token{width:12%}.stage-grid.board-mode .stage-card{width:105px;height:42px;min-height:42px}
   .stage-board-wrap.advanced .stage-grid{padding:12px;gap:9px}.gate-art{min-height:120px}.gate-card h3{font-size:15px!important}
   .clear-medal{width:70px;height:70px;left:18px;top:72px}.ending-dialogue img{width:50px;height:58px}
+}
+@media(max-height:700px) and (min-width:801px){
+  .quiz-screen[data-stage="numbers"]{padding:10px 7%;overflow-y:auto}
+  .quiz-screen[data-stage="numbers"] .quiz-head{margin-bottom:7px}
+  .quiz-screen[data-stage="numbers"] .question-card{padding:13px 26px;min-height:0}
+  .quiz-screen[data-stage="numbers"] .question-card h2{font-size:21px;margin:3px 0 8px}
+  .quiz-screen[data-stage="numbers"] .question-type{margin:0 0 3px}
+  .keypad-console{padding:10px 16px}
+  .keypad-display{height:44px;font-size:32px;margin-bottom:8px}
+  .keypad-grid{gap:6px}.keypad-grid button{min-height:38px}
+  .keypad-console p{display:none}
+  .keypad-inline-feedback{margin:-1px 0 7px;padding:5px 8px;font-size:12px}
 }
 
 /* v2 final overrides: compact RPG cores without duplicate map icons */

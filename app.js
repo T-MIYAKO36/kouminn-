@@ -133,9 +133,10 @@
   function checkKeypad(q){
     if(session.keypadValue.length!==q.code.length){showFeedback('bad',`${q.code.length}桁のコードを入力しよう。`);return;}
     session.attempts++;const ok=session.keypadValue===q.code;
-    if(ok){sfx('correct');pulse('lock-open');session.answered=true;finishAnswer(q,true);$('#interactionArea').querySelectorAll('button').forEach(b=>b.disabled=true);}
-    else{session.attempts===1?sfx('gagaan'):sfx('wrong');if(session.attempts===1){recordWrong(q);showFeedback('bad','コードエラー！ ヒント：'+q.h);session.keypadValue='';renderKeypad(q);}else{session.answered=true;session.keypadValue=q.code;renderKeypad(q);$('#interactionArea').querySelectorAll('button').forEach(b=>b.disabled=true);finishAnswer(q,false);}}
+    if(ok){sfx('correct');pulse('lock-open');session.answered=true;finishAnswer(q,true);enableKeypadNext();}
+    else{session.attempts===1?sfx('gagaan'):sfx('wrong');if(session.attempts===1){recordWrong(q);session.keypadValue='';renderKeypad(q);showFeedback('bad','コードエラー！ ヒント：'+q.h);}else{session.answered=true;session.keypadValue=q.code;renderKeypad(q);finishAnswer(q,false);enableKeypadNext();}}
   }
+  function enableKeypadNext(){const area=$('#interactionArea'),buttons=[...area.querySelectorAll('button')];buttons.forEach(b=>b.disabled=true);const next=area.querySelector('[data-key="決定"]');if(next){next.disabled=false;next.textContent='次へ';next.onclick=()=>nextQuestion();}$('#nextQuestionBtn').classList.add('hidden');}
 
   function renderSort(q){
     let selected=[];const bank=shuffle(q.items),area=$('#sortArea');area.classList.remove('hidden');
@@ -148,7 +149,7 @@
   function recordWrong(q){const id=q.q;state.errors[q.tag||session.title]=(state.errors[q.tag||session.title]||0)+1;if(!state.wrongIds.includes(id))state.wrongIds.push(id);save();}
   function scoreAnswer(firstTry){if(session.scored!==false){state.total++;if(firstTry&&session.attempts===1)state.firstCorrect++;}save();}
   function finishAnswer(q,firstTry){scoreAnswer(firstTry);if(!firstTry&&!state.wrongIds.includes(q.q))recordWrong(q);showFeedback(firstTry?'good':'bad',(firstTry?'成功！ ':'正答を確認：')+q.e);$('#nextQuestionBtn').classList.remove('hidden');}
-  function showFeedback(kind,text){$('#feedback').className='feedback '+kind;$('#feedback').textContent=text;}
+  function showFeedback(kind,text){const q=session?.qs?.[session.index],fb=$('#feedback');if(q?.mode==='keypad'){fb.className='feedback hidden';let inline=$('.keypad-inline-feedback');if(!inline){inline=document.createElement('div');inline.className='keypad-inline-feedback';const display=$('.keypad-display');display.insertAdjacentElement('afterend',inline);}inline.className='keypad-inline-feedback '+kind;inline.textContent=text;return;}fb.className='feedback '+kind;fb.textContent=text;}
   function nextQuestion(){session.index++;session.attempts=0;session.answered=false;session.keypadValue='';save();if(session.index<session.qs.length)showQuestion();else completeStage();}
 
   function completeStage(){
@@ -158,7 +159,7 @@
   }
   function rewardModal(completedId){
     const basic=cats[completedId],allBasic=coreIds.every(x=>state.cleared.includes(x));
-    if(basic){sfx('reward');if(allBasic)setTimeout(()=>{sfx('fanfare');playRouteJingle();},650);}else sfx('reward');
+    if(basic){sfx('reward');if(allBasic)setTimeout(()=>playRouteJingle(),650);}else sfx('reward');
     pulse(basic?'core-awaken':'route-restored');
     const reward=basic?`<div class="reward-item core-reward core-${completedId}"><span class="core-rings"></span><img src="assets/shard-${completedId}.svg" alt="${basic[0]}の民意コア"><b>${basic[0]}コア</b></div>`:completedId==='numbers'?'<div class="reward-item gate-reward"><img src="assets/gate-number-v2.webp" alt="数字の扉"><b>テンキー扉 解錠</b></div>':'<div class="reward-item gate-reward"><img src="assets/gate-procedure-v2.webp" alt="手続きの扉"><b>手続きルート 復旧</b></div>';
     $('#modalBody').innerHTML=`<p class="eyebrow">MISSION COMPLETE</p>${reward}<h2>${basic?'「'+basic[0]+'」の民意コア起動！':completedId==='numbers'?'3つの数字ロックを解除！':'政治の手続きを接続！'}</h2><p>${basic?basic[1]+'力が、民意ルートへ戻りました。':'正しい操作が、民意の王門への道を開きました。'}</p><button class="btn primary compact" data-action="map">マップへ</button>`;
