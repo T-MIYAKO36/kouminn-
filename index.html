@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#071b3d">
   <title>第4章 初めての国会で、大失敗しました。</title>
-  <link rel="stylesheet" href="styles.css?v=20260927-4">
+  <link rel="stylesheet" href="styles.css?v=20260927-5">
   <link rel="stylesheet" href="responsive.css">
 </head>
 <body>
@@ -21,10 +21,15 @@
       <img class="title-cover" src="assets/ch4-cover-final.webp" alt="第4章 政治のしくみ 公民王への道">
       <div class="title-card title-launcher">
         <h1 class="sr-only">第4章 政治のしくみ　公民王への道</h1>
-        <p class="launch-copy">民意のルートを復旧せよ！</p>
-        <div class="title-actions">
+        <p id="launchCopy" class="launch-copy">民意のルートを復旧せよ！</p>
+        <div id="startActions" class="title-actions">
           <button class="btn primary" data-action="new">はじめる</button>
           <button id="continueBtn" class="btn secondary" data-action="continue">つづきから</button>
+        </div>
+        <div id="clearHomeActions" class="title-actions clear-home-actions hidden">
+          <button class="btn primary" data-action="map">学習ステージ</button>
+          <button class="btn corridor-btn" data-action="corridor">異変回廊</button>
+          <button class="btn secondary" data-action="review">苦手復習</button>
         </div>
       </div>
     </section>
@@ -76,6 +81,27 @@
       </div>
     </section>
 
+    <section id="corridorScreen" class="screen corridor-screen">
+      <div class="corridor-hud">
+        <div><span>POST CLEAR BONUS</span><strong>国会議事堂・異変回廊</strong></div>
+        <div id="corridorProgress" class="corridor-progress" aria-label="異変回廊の進行"></div>
+        <b id="corridorNumber">1 / 5</b>
+      </div>
+      <div class="corridor-stage">
+        <div id="corridorLocation" class="corridor-location">中央広間</div>
+        <div id="corridorSign" class="corridor-sign">参議院 本会議場 →</div>
+        <img id="corridorReaction" class="corridor-reaction" src="assets/benzo-inspect.webp" alt="周囲を調べる勉三">
+        <div id="corridorSpeech" class="corridor-speech hidden"></div>
+      </div>
+      <div class="corridor-command">
+        <p>掲示や様子を確認。異変があれば戻り、なければ進もう。</p>
+        <div class="corridor-controls">
+          <button class="corridor-choice back" data-action="corridor-choice" data-choice="back"><span>異変あり</span><strong>戻る</strong></button>
+          <button class="corridor-choice go" data-action="corridor-choice" data-choice="go"><span>異変なし</span><strong>進む</strong></button>
+        </div>
+      </div>
+    </section>
+
     <section id="resultScreen" class="screen result-screen">
       <div class="result-card">
         <p class="eyebrow">CHAPTER CLEAR</p>
@@ -92,8 +118,8 @@
         <div class="ending-dialogue"><img src="assets/hiropon-official-v2.webp" alt="ヒロポン"><p><strong>ヒロポン</strong><br>国民の声は、選挙から政治の仕組みを通って届く。今日取り戻したルートを忘れるでないぞ！</p></div>
         <p class="ending">政治の仕組みを救った勉三は、経済都市の危機を任されることになった。</p>
         <div class="title-actions">
-          <button class="btn primary" data-action="review">苦手を復習</button>
-          <button class="btn secondary" data-action="restart">もう一度挑戦</button>
+          <button class="btn primary" data-action="home">クリア後ホームへ</button>
+          <button class="btn corridor-btn" data-action="corridor">異変回廊へ</button>
         </div>
       </div>
     </section>
@@ -103,6 +129,6 @@
     </div>
   </main>
   <script src="questions.js"></script>
-  <script src="app.js?v=20260927-4"></script>
+  <script src="app.js?v=20260927-5"></script>
 </body>
 </html>

@@ -28,15 +28,42 @@
     {mode:'keypad',q:'LOCK 3｜内閣不信任決議後、解散しない場合は何日以内に総辞職？',code:'10',e:'10日以内に衆議院を解散しない限り、内閣は総辞職します。',h:'40・30より短い期限です。',tag:'数字コード'}
   ];
 
-  let state=fresh(), session=null, storyAt=0, bossWarningTimer=null;
+  const corridorGroups=[
+    [
+      {place:'中央広間',bg:'assets/corridor-hall.webp',sign:'参議院　本会議場 →',anomaly:false,e:'中央広間から参議院本会議場へ進む案内。異変なしじゃ。'},
+      {place:'中央広間',bg:'assets/corridor-hall.webp',sign:'参議院　解散総選挙 会場 →',anomaly:true,e:'参議院に解散はありません。解散があるのは衆議院です。'},
+      {place:'中央広間',bg:'assets/corridor-hall.webp',sign:'国会議員は内閣が選びます',anomaly:true,e:'国会議員を選ぶのは国民です。'}
+    ],
+    [
+      {place:'本会議場前',bg:'assets/corridor-chamber.webp',sign:'法律案　本会議で採決',anomaly:false,e:'法律案は委員会などで審議され、本会議で採決されます。'},
+      {place:'本会議場前',bg:'assets/corridor-chamber.webp',sign:'法律は内閣の決定だけで成立',anomaly:true,e:'法律を制定するのは国会です。内閣だけでは成立しません。'},
+      {place:'本会議場前',bg:'assets/corridor-chamber.webp',sign:'衆議院議員　任期6年',anomaly:true,e:'衆議院議員の任期は4年です。'}
+    ],
+    [
+      {place:'委員会室',bg:'assets/corridor-committee.webp',sign:'法律案を詳しく審議中',anomaly:false,e:'委員会では、法律案などを専門的に詳しく審議します。'},
+      {place:'委員会室',bg:'assets/corridor-committee.webp',sign:'ここで刑事裁判を開きます',anomaly:true,e:'裁判を行うのは裁判所です。委員会は国会の審議の場です。'}
+    ],
+    [
+      {place:'議員室前',bg:'assets/corridor-members.webp',sign:'国会議員は国民の代表',anomaly:false,e:'国会議員は、選挙で選ばれた国民の代表です。'},
+      {place:'議員室前',bg:'assets/corridor-members.webp',sign:'参議院議員　任期4年・解散あり',anomaly:true,e:'参議院議員の任期は6年で、解散はありません。'},
+      {place:'議員室前',bg:'assets/corridor-members.webp',sign:'内閣不信任決議は参議院だけの権限',anomaly:true,e:'内閣不信任決議を行えるのは衆議院です。'}
+    ],
+    [
+      {place:'地下連絡通路',bg:'assets/corridor-underground.webp',sign:'予算案　内閣が作成 → 国会へ',anomaly:false,e:'内閣が予算案を作成し、国会が議決します。'},
+      {place:'地下連絡通路',bg:'assets/corridor-underground.webp',sign:'最高裁判所が予算案を議決',anomaly:true,e:'予算を議決するのは国会です。'},
+      {place:'地下連絡通路',bg:'assets/corridor-underground.webp',sign:'条例は国会だけが制定します',anomaly:true,e:'条例は地方公共団体が制定します。'}
+    ]
+  ];
+
+  let state=fresh(), session=null, storyAt=0, bossWarningTimer=null, corridorTimer=null, corridor=null;
   let audioCtx=null, fanfare=null, routeJingle=null, bossMusic=null, soundOn=localStorage.getItem('hiropon_sound')!=='off';
   const favoriteAudio={};
   const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 
-  function fresh(){return{cleared:[],firstCorrect:0,total:0,errors:{},wrongIds:[],started:Date.now(),duration:null,finished:false,best:null,storyAt:0,storyDone:false,activeSession:null};}
+  function fresh(){return{cleared:[],firstCorrect:0,total:0,errors:{},wrongIds:[],started:Date.now(),duration:null,finished:false,best:null,storyAt:0,storyDone:false,activeSession:null,corridorSeen:false,corridorClears:0,corridorBest:null};}
   function save(){state.storyAt=storyAt;state.activeSession=session;localStorage.setItem(SAVE,JSON.stringify(state));renderHeader();}
   function load(){try{const v=JSON.parse(localStorage.getItem(SAVE));if(v){state={...fresh(),...v};storyAt=state.storyAt||0;session=state.activeSession||null;}}catch(e){state=fresh();session=null;storyAt=0;}}
-  function screen(id){clearTimeout(bossWarningTimer);$$('.screen').forEach(x=>x.classList.remove('active'));$('#'+id).classList.add('active');}
+  function screen(id){clearTimeout(bossWarningTimer);clearTimeout(corridorTimer);$$('.screen').forEach(x=>x.classList.remove('active'));$('#'+id).classList.add('active');}
   function shuffle(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;}
 
   function renderHeader(){
@@ -44,6 +71,8 @@
     $('#shardCount').textContent=n+' / 5';
     $('#shardMini').innerHTML=coreIds.map(id=>`<span class="mini-shard core-${id} ${state.cleared.includes(id)?'found':''}" title="${coreNames[id]}コア"></span>`).join('');
     $('#continueBtn').disabled=!localStorage.getItem(SAVE);
+    const clearedHome=state.finished,$start=$('#startActions'),$clear=$('#clearHomeActions'),copy=$('#launchCopy');
+    if($start&&$clear){$start.classList.toggle('hidden',clearedHome);$clear.classList.toggle('hidden',!clearedHome);copy.textContent=clearedHome?'完全復旧後の行き先を選ぼう':'民意のルートを復旧せよ！';}
     const sb=$('#soundBtn');if(sb){sb.textContent=soundOn?'♪':'×';sb.setAttribute('aria-label',soundOn?'音を切る':'音を出す');sb.setAttribute('aria-pressed',String(soundOn));}
   }
 
@@ -68,6 +97,7 @@
   function pulse(cls){const game=$('#game');game.classList.remove(cls);void game.offsetWidth;game.classList.add(cls);setTimeout(()=>game.classList.remove(cls),750);}
 
   function startNew(){playOpeningFanfare();pulse('adventure-start');state=fresh();session=null;storyAt=0;save();showStory();}
+  function showHome(){stopAllAudio();renderHeader();$('#locationLabel').textContent=state.finished?'政治の都・完全復旧':'政治の都・中央広場';screen('titleScreen');}
   function showStory(){screen('storyScreen');const [who,text]=story[storyAt];$('.speaker').textContent=who==='勉三'?'北中 勉三':'ヒロポン';$('#storyText').textContent=text;$('.scene-card').dataset.speaker=who;save();}
 
   function renderMap(){
@@ -174,15 +204,44 @@
   }
   function reviewCompleteModal(){$('#modalBody').innerHTML='<p class="eyebrow">REVIEW COMPLETE</p><h2>苦手復習、完了！</h2><p>間違えた問題をもう一度確認しました。</p><button class="btn primary compact" data-action="result">結果へ戻る</button>';$('#modal').classList.remove('hidden');$('#modalBody [data-action="result"]').onclick=()=>{$('#modal').classList.add('hidden');showResult()};}
   function showResult(){stopBossMusic();screen('resultScreen');pulse('chapter-clear');const rate=state.total?state.firstCorrect/state.total:0,rank=rate>=.9?'S':rate>=.8?'A':rate>=.65?'B':'C';$('#rankSeal').textContent=rank;$('#accuracyResult').textContent=Math.round(rate*100)+'%';$('#scoreResult').textContent=`${state.firstCorrect} / ${state.total}`;const sec=state.duration??Math.max(0,Math.round((Date.now()-state.started)/1000));$('#timeResult').textContent=`${Math.floor(sec/60)}:${String(sec%60).padStart(2,'0')}`;const weak=Object.entries(state.errors).sort((a,b)=>b[1]-a[1]).slice(0,2).map(x=>x[0]);$('#weakResult').textContent=weak.length?'復習ポイント：'+weak.join('・'):'5つの民意ルートを初回で接続しました！';}
+
+  function startCorridor(){
+    if(!state.finished){showHome();return;}
+    corridor={scenes:shuffle(corridorGroups.map(group=>shuffle(group)[0])),index:0,mistakes:0,locked:false};renderCorridorScene();
+    if(!state.corridorSeen){state.corridorSeen=true;save();$('#modalBody').innerHTML='<p class="eyebrow">BONUS STAGE</p><h2>国会議事堂・異変回廊</h2><p>本物に近い国会議事堂を5場面だけ探検します。<br><b>政治の異変があれば「戻る」、異変がなければ「進む」</b>を選ぼう。</p><div class="corridor-mini-rule"><span>異変あり → 戻る</span><span>異変なし → 進む</span></div><button class="btn primary compact" data-action="corridor-begin">探検開始</button>';$('#modal').classList.remove('hidden');}
+  }
+  function renderCorridorScene(){
+    screen('corridorScreen');$('#locationLabel').textContent='国会議事堂・異変回廊';const scene=corridor.scenes[corridor.index],root=$('#corridorScreen');
+    root.classList.remove('corridor-correct','corridor-wrong');root.style.backgroundImage=`linear-gradient(rgba(2,8,18,.14),rgba(2,8,18,.5)),url("${scene.bg}")`;
+    $('#corridorLocation').textContent=scene.place;$('#corridorSign').textContent=scene.sign;$('#corridorNumber').textContent=`${corridor.index+1} / ${corridor.scenes.length}`;
+    $('#corridorProgress').innerHTML=corridor.scenes.map((_,i)=>`<i class="${i<corridor.index?'done':i===corridor.index?'now':''}"></i>`).join('');
+    const reaction=$('#corridorReaction');reaction.src='assets/benzo-inspect.webp';reaction.alt='周囲を調べる勉三';reaction.className='corridor-reaction inspect';
+    $('#corridorSpeech').className='corridor-speech hidden';$$('.corridor-choice').forEach(b=>b.disabled=false);corridor.locked=false;
+  }
+  function corridorChoice(choice){
+    if(!corridor||corridor.locked)return;corridor.locked=true;$$('.corridor-choice').forEach(b=>b.disabled=true);
+    const scene=corridor.scenes[corridor.index],correct=choice===(scene.anomaly?'back':'go'),root=$('#corridorScreen'),reaction=$('#corridorReaction'),speech=$('#corridorSpeech');
+    root.classList.add(correct?'corridor-correct':'corridor-wrong');speech.className='corridor-speech '+(correct?'good':'bad');
+    if(correct){sfx('correct');reaction.src='assets/hiropon-scold.webp';reaction.alt='正解を伝えるヒロポン';reaction.className='corridor-reaction scold';speech.innerHTML=`<strong>ヒロポン</strong><br>${scene.e}`;}
+    else{corridor.mistakes++;sfx('gagaan');const fall=corridor.mistakes%2===1;reaction.src=fall?'assets/benzo-fall.webp':'assets/benzo-despair.webp';reaction.alt=fall?'転倒する勉三':'絶望する勉三';reaction.className='corridor-reaction '+(fall?'fall':'despair');speech.innerHTML=`<strong>ヒロポン「待つのじゃ！」</strong><br>${scene.e}`;}
+    corridorTimer=setTimeout(()=>{if(correct)corridor.index++;else corridor.index=Math.max(0,corridor.index-1);if(corridor.index>=corridor.scenes.length)finishCorridor();else renderCorridorScene();},1650);
+  }
+  function finishCorridor(){
+    state.corridorClears=(state.corridorClears||0)+1;state.corridorBest=state.corridorBest==null?corridor.mistakes:Math.min(state.corridorBest,corridor.mistakes);save();sfx('reward');if(corridor.mistakes===0)setTimeout(()=>sfx('fanfare'),550);
+    const title=corridor.mistakes===0?'完全脱出！ 異変ゼロ見逃し':'異変回廊から脱出！',badge=corridor.mistakes===0?'国会異変マスター':'国会異変ハンター';
+    $('#modalBody').innerHTML=`<p class="eyebrow">CORRIDOR CLEAR</p><h2>${title}</h2><img class="corridor-clear-react" src="assets/hiropon-scold.webp" alt="ヒロポン"><p>ミス ${corridor.mistakes}回｜獲得称号 <b>「${badge}」</b></p><div class="title-actions corridor-end-actions"><button class="btn primary compact" data-action="corridor-again">もう一度</button><button class="btn secondary compact" data-action="home">ホームへ</button></div><a class="official-tour-link" href="https://www.sangiin.go.jp/VRTour/index.html" target="_blank" rel="noopener">本物の国会議事堂を探検する</a>`;$('#modal').classList.remove('hidden');
+  }
+
   function review(){const all=[...Object.values(Q.basic).flat(),...Q.boss];let qs=all.filter(q=>state.wrongIds.includes(q.q));if(!qs.length){const weak=Object.entries(state.errors).sort((a,b)=>b[1]-a[1])[0]?.[0];qs=all.filter(q=>(q.tag||'')===weak).slice(0,5)}if(!qs.length)qs=shuffle(Q.boss).slice(0,4);session={id:'review',title:'苦手復習',qs:shuffle(qs).slice(0,5),index:0,attempts:0,answered:false,scored:false,keypadValue:''};save();showQuestion();}
-  function continueGame(){load();if(state.finished){showResult();return;}if(session){if(session.answered){session.index++;session.attempts=0;session.answered=false;session.keypadValue='';if(session.index>=session.qs.length){completeStage();return;}save();showQuestion();return;}showQuestion(true);return;}if(!state.storyDone){showStory();return;}renderMap();}
-  function help(){const body='<h2>遊び方</h2><ol><li>5つの門で、知識問題と専用ミッションに挑戦します。</li><li>獲得した5つの民意コアで、テンキー扉を解除します。</li><li>政治の手続きを2本つなぎ直します。</li><li>ボス戦で、国民の声を正しい政治ルートへ届けます。</li></ol><p>不正解でもヒントを見て再挑戦できます。約12～18分、進行は自動保存です。</p>';$('#modalBody').innerHTML=body;$('#modal').classList.remove('hidden');}
+  function continueGame(){load();if(state.finished){showHome();return;}if(session){if(session.answered){session.index++;session.attempts=0;session.answered=false;session.keypadValue='';if(session.index>=session.qs.length){completeStage();return;}save();showQuestion();return;}showQuestion(true);return;}if(!state.storyDone){showStory();return;}renderMap();}
+  function help(){const body='<h2>遊び方</h2><ol><li>5つの門で、知識問題と専用ミッションに挑戦します。</li><li>獲得した5つの民意コアで、テンキー扉を解除します。</li><li>政治の手続きを2本つなぎ直します。</li><li>ボス戦で、国民の声を正しい政治ルートへ届けます。</li><li>クリア後は、異変回廊・学習ステージ・苦手復習を選べます。</li></ol><p>不正解でもヒントを見て再挑戦できます。約12～18分、進行は自動保存です。</p>';$('#modalBody').innerHTML=body;$('#modal').classList.remove('hidden');}
 
   document.addEventListener('click',e=>{const a=e.target.closest('[data-action]');if(!a)return;const act=a.dataset.action;
     if(act==='sound'){soundOn=!soundOn;localStorage.setItem('hiropon_sound',soundOn?'on':'off');if(!soundOn)stopAllAudio();renderHeader();if(soundOn){sfx('correct');if(session?.id==='boss')playBossMusic();}return;}
     if(act==='new')startNew();if(act==='continue'){sfx('tap');continueGame();}
     if(act==='story-next'){sfx('tap');storyAt++;if(storyAt<story.length)showStory();else{state.storyDone=true;save();renderMap();}}
     if(act==='next-question'){sfx('tap');nextQuestion();}if(act==='help'){sfx('tap');help();}if(act==='close-modal')$('#modal').classList.add('hidden');if(act==='review')review();if(act==='restart')startNew();
+    if(act==='home'){$('#modal').classList.add('hidden');showHome();}if(act==='map'){sfx('tap');renderMap();}if(act==='corridor'){sfx('tap');startCorridor();}if(act==='corridor-begin'){$('#modal').classList.add('hidden');}if(act==='corridor-again'){$('#modal').classList.add('hidden');startCorridor();}if(act==='corridor-choice')corridorChoice(a.dataset.choice);
   });
   load();renderHeader();
 })();
