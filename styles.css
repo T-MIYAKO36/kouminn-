@@ -157,7 +157,7 @@ button{font:inherit}
 .sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 .title-cover{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;filter:saturate(1.03) brightness(.86)}
 .title-screen::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 56%,rgba(2,10,25,.83) 100%);pointer-events:none}
-.title-launcher{z-index:3;top:auto;bottom:4.2%;left:50%;transform:translateX(-50%);width:min(620px,74%);padding:14px 24px 18px;background:rgba(4,19,44,.88);backdrop-filter:blur(5px);border-width:2px;text-align:center}
+.title-launcher{position:absolute;z-index:3;top:auto;bottom:3.2%;left:50%;transform:translateX(-50%);width:min(620px,74%);padding:14px 24px 18px;background:rgba(4,19,44,.88);backdrop-filter:blur(5px);border-width:2px;text-align:center}
 .title-launcher .launch-copy{margin:0 0 10px;color:#ffe49a;font-weight:900;letter-spacing:.08em;font-size:clamp(15px,1.8vw,22px)}
 .title-launcher .title-actions{margin-top:0}
 
@@ -320,13 +320,15 @@ button{font:inherit}
 }
 
 /* v2 final overrides: compact RPG cores without duplicate map icons */
-.stage-grid.board-mode .stage-core{position:absolute;left:-8px;top:-10px;width:34px;height:34px;margin:0;z-index:4}
+.stage-grid.board-mode .stage-card{width:168px;height:58px;min-height:58px;overflow:visible}
+.stage-grid.board-mode .stage-core{position:absolute;left:-15px;top:50%;width:48px;height:48px;margin:0;z-index:4;transform:translateY(-50%);animation:corePulse 1.8s infinite}
 .stage-grid.board-mode .stage-core::before{inset:-4px}
-.stage-grid.board-mode .stage-card h3{padding-left:17px}
+.stage-grid.board-mode .stage-card h3{padding-left:29px;font-size:14px}
 .stage-grid.board-mode .stage-card .clear-mark{display:none}
 .footer-shards .footer-core img{width:58%;height:58%;object-fit:contain;opacity:1;filter:drop-shadow(0 1px 1px #fff)}
 .footer-shards .footer-core.found img{filter:drop-shadow(0 0 7px #ffe37a)}
 @media(max-width:800px){
-  .stage-grid.board-mode .stage-core{left:-5px;top:-8px;width:29px;height:29px}
-  .stage-grid.board-mode .stage-card h3{padding-left:12px}
+  .stage-grid.board-mode .stage-card{width:126px;height:48px;min-height:48px}
+  .stage-grid.board-mode .stage-core{left:-10px;top:50%;width:38px;height:38px}
+  .stage-grid.board-mode .stage-card h3{padding-left:23px;font-size:12px}
 }
