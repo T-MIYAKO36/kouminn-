@@ -181,7 +181,8 @@ button{font:inherit}
 .route-light{position:absolute;top:21px;width:16px;height:16px;border-radius:50%;background:#69d8ff;box-shadow:0 0 16px #69d8ff}
 .mission-choices .choice.correct{background:linear-gradient(#18845c,#0d553f)!important;box-shadow:0 0 26px #70efbd!important}
 .mission-choices .choice.wrong{background:linear-gradient(#8a3042,#4a1a28)!important}
-.mission-choices .boss-next-inline{grid-column:1/-1;min-height:50px;margin-top:5px;border:2px solid #fff0a2;box-shadow:0 0 22px rgba(255,222,98,.68),0 5px 0 #76520d;font-size:17px}
+.mission-choices .boss-choice-hidden{display:none!important}
+.mission-choices .boss-next-inline{grid-column:span 2;min-height:54px;margin-top:5px;border:2px solid #fff0a2;box-shadow:0 0 22px rgba(255,222,98,.68),0 5px 0 #76520d;font-size:18px}
 
 .interaction-area{display:grid;place-items:center;margin-top:12px}
 .keypad-console{width:min(390px,92%);padding:18px 22px;border:3px solid #d8b95a;border-radius:18px;background:linear-gradient(145deg,#06142d,#12365f);box-shadow:0 12px 28px rgba(0,0,0,.35),inset 0 0 22px rgba(86,184,255,.14);text-align:center;color:#d9eaff}
@@ -211,6 +212,7 @@ button{font:inherit}
   .mission-choices{grid-template-columns:1fr!important}.mission-choices .choice{min-height:58px;padding:24px 10px 9px!important}
   .quiz-screen[data-stage="boss"] .question-card{margin:0 auto;width:92%}
   .core-tray{gap:5px;padding:5px 8px}.battle-core{width:31px;height:31px}
+  .mission-choices .boss-next-inline{grid-column:1/-1}
 }
 
 @media(max-height:700px) and (min-width:801px){

@@ -127,6 +127,7 @@
 
   function enableBossNext(){
     const list=$('#choiceList');let next=list.querySelector('.boss-next-inline');
+    list.querySelectorAll('.choice').forEach(choice=>{choice.disabled=true;if(!choice.classList.contains('correct'))choice.classList.add('boss-choice-hidden');});
     if(!next){next=document.createElement('button');next.className='btn primary boss-next-inline';list.appendChild(next);}
     next.textContent=session.index+1<session.qs.length?'次の判断へ':'結果を見る';next.onclick=()=>nextQuestion();$('#nextQuestionBtn').classList.add('hidden');
   }
