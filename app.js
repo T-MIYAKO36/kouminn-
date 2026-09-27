@@ -121,8 +121,14 @@
   }
   function answerChoice(btn,q){
     if(session.answered)return;session.attempts++;const ok=btn.querySelector('b')?btn.querySelector('b').textContent===q.a:btn.textContent===q.a;
-    if(ok){clearTimeout(bossWarningTimer);$('#quizScreen').classList.remove('urgent');sfx('correct');pulse('answer-flash');session.answered=true;btn.classList.add('correct');finishAnswer(q,true);}
-    else{session.attempts===1?sfx('wrong'):sfx('gagaan');btn.classList.add('wrong');btn.disabled=true;if(session.attempts===1){showFeedback('bad','ヒント：'+q.h);recordWrong(q);}else{session.answered=true;$$('.choice').forEach(b=>{b.disabled=true;const t=b.querySelector('b')?b.querySelector('b').textContent:b.textContent;if(t===q.a)b.classList.add('correct')});finishAnswer(q,false);}}
+    if(ok){clearTimeout(bossWarningTimer);$('#quizScreen').classList.remove('urgent');sfx('correct');pulse('answer-flash');session.answered=true;btn.classList.add('correct');finishAnswer(q,true);if(session.id==='boss')enableBossNext();}
+    else{session.attempts===1?sfx('wrong'):sfx('gagaan');btn.classList.add('wrong');btn.disabled=true;if(session.attempts===1){showFeedback('bad','ヒント：'+q.h);recordWrong(q);}else{session.answered=true;$$('.choice').forEach(b=>{b.disabled=true;const t=b.querySelector('b')?b.querySelector('b').textContent:b.textContent;if(t===q.a)b.classList.add('correct')});finishAnswer(q,false);if(session.id==='boss')enableBossNext();}}
+  }
+
+  function enableBossNext(){
+    const list=$('#choiceList');let next=list.querySelector('.boss-next-inline');
+    if(!next){next=document.createElement('button');next.className='btn primary boss-next-inline';list.appendChild(next);}
+    next.textContent=session.index+1<session.qs.length?'次の判断へ':'結果を見る';next.onclick=()=>nextQuestion();$('#nextQuestionBtn').classList.add('hidden');
   }
 
   function renderKeypad(q){
